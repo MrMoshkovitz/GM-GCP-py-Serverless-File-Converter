@@ -1,23 +1,22 @@
 {
   "name": "serverless-file-converter",
   "version": "1.0.0",
-  "description": "PDF-Converter is a containerized serverless web app that runs on Cloud Run. This App automatically converts files stored in a GCP Bucket into PDF's and store them in a different Bucket.",
+  "description": "Serverless File Converter, Deployed using Cloud Run and Cloud Build. Event Triggered From Bucket",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MrMoshkovitz/Serverless-PDF-Converter.git"
+    "url": "git+https://github.com/MrMoshkovitz/Serverless-File-Converter.git"
   },
   "keywords": [],
   "author": "Gal Moshkovitz <gal.moshko@gmail.com> (https://github.com/MrMoshkovitz)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MrMoshkovitz/Serverless-PDF-Converter/issues"
+    "url": "https://github.com/MrMoshkovitz/Serverless-File-Converter/issues"
   },
-  "homepage": "https://github.com/MrMoshkovitz/Serverless-PDF-Converter#readme",
+  "homepage": "https://github.com/MrMoshkovitz/Serverless-File-Converter#readme",
   "dependencies": {
     "@google-cloud/storage": "^5.8.1",
     "body-parser": "^1.19.0",
