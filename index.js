@@ -21,7 +21,7 @@ app.post("/", async (req, res) => {
         console.log("File~~~~~~~~~~~~~~~~~~");
         console.log(file);
         console.log(`BucketName: ${file.name}File Name: ${file.name}`)
-        console.log(bucket.name.spllit('-')[-1]);
+        console.log(file.bucket.spllit('-')[-1]);
 		await downloadFile(file.bucket, file.name);
 		const docFileName = await convertFile(file.name);
 		await uploadFile(process.env.DOCX_BUCKET, docFileName);
