@@ -1,0 +1,37 @@
+This Serverless File Converter is Runing on Cloud run and deployed automatically using cloud build. When a file is uploaded to a specified bucket the app converts the file format and upload the file to the converted files folder.
+
+How do I Activate it? (You need to be Authenticated to do so, Un-Authenticated Requests are block)
+First Clone the Repo from Github.
+
+* git clone -b Combined https://github.com/mrmoshkovitz/serverless-file-converter
+
+Then add Read, Write, Execute Permission for the Startup.sh file and then Run the file.
+* cd serverless-file-converter
+* chmod +x statup.sh
+* ./startup.sh
+
+The Activation i really easy, all of the required Infrastucture and IAM Privileges will be creared automatically when you run startup.sh.
+
+
+Now you just need to wait for your app to be fully deployed.
+
+
+What's startup.sh Doing??
+
+* Specify Env Variable for the Working Google Cloud Platform ProjectID
+* Builds an Container from our app over Google Cloud Build
+* Deploys The App using Google Cloud Run
+* Gets the newly created Service URL and setting an SERVICE_URL Env Variable
+
+* Tests Un-Authenticated Post Request to the Service URL ==> Result Should be permission Denied
+* Tests Authenticated Post Request to the Service URL ==> Result Should be OK
+* Creates 3 Buckets --> 2 for file converters and 1 for converted files ($GOOGLE_CLOUD_PROJECT-file2pdf, $GOOGLE_CLOUD_PROJECT-file2docx, $GOOGLE_CLOUD_PROJECT-done)
+* Creat Pub Sub Topic for each file conversion required, this Topic will be triggered automatically when a file will be upload to the relevant bucket
+* Create new Service Account for Pub Sub to triggeer the cloud Run service (Least Privileges Required)
+* Give this new Servive account permissions to invoke the File Converter App
+* Enable the Porject to create Pub Sub Authentication Tokens
+* Create The Pub Sub Subscription so that the file converter can run whenver a message is published
+* Re-Build, Re-Deploy App.
+
+
+
