@@ -4,6 +4,7 @@
   "description": "Serverless File Converter, Deployed using Cloud Run and Cloud Build. Event Triggered From Bucket",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
