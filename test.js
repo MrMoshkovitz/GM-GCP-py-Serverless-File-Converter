@@ -28,6 +28,6 @@ let p = {
 	},
 };
 let name2 = p.name
-name2 = name2.split('-')
+name2 = name2.split("-")
 
-console.log(name2);
+console.log(name2[name2.length -1]);

@@ -18,15 +18,14 @@ app.post("/", async (req, res) => {
 	try {
         const file = decodeBase64Json(req.body.message.data);
         console.log("File~~~~~~~~~~~~~~~~~~");
-        console.log("File~~~~~~~~~~~~~~~~~~");
         console.log(file);
         console.log(`BucketName: ${file.bucket}, File Name: ${file.name}`)
-        let endBucketName = file.bucket.toString()
-		endBucketName = endBucketName.spllit('-')
-		endBucketName = endBucketName[endBucketName.length-1];
-		console.log(endBucketName);
+        let endBucketName = file.bucket
+		let splittedBucketName = endBucketName.split("-")
+		let newFileType = splittedBucketName[splittedBucketName.length-1];
+		console.log(newFileType);
 		await downloadFile(file.bucket, file.name);
-		convertedFileName = await convertFile(endBucketName, file.name)
+		convertedFileName = await convertFile(newFileType, file.name)
 		await uploadFile(process.env.DONE_BUCKET, convertedFileName);
 		await deleteFile(file.bucket, file.name);
 	} catch (ex) {
