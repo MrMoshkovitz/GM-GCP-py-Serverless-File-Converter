@@ -21,10 +21,12 @@ app.post("/", async (req, res) => {
         console.log("File~~~~~~~~~~~~~~~~~~");
         console.log(file);
         console.log(`BucketName: ${file.name}File Name: ${file.name}`)
-        console.log(file.bucket.spllit('-')[-1]);
+        let endBucketName = file.bucket.spllit('-')
+		endBucketName = endBucketName[endBucketName.length-1];
+		console.log(endBucketName);
 		await downloadFile(file.bucket, file.name);
-		const docFileName = await convertFile(file.name);
-		await uploadFile(process.env.DOCX_BUCKET, docFileName);
+		convertedFileName = await convertFile(endBucketName, file.name)
+		await uploadFile(process.env.DONE_BUCKET, convertedFileName);
 		await deleteFile(file.bucket, file.name);
 	} catch (ex) {
 		console.log(`Error: ${ex}`);
@@ -43,26 +45,28 @@ async function downloadFile(bucketName, fileName) {
 
     const options = { destination: `/tmp/${fileName}` };
     console.log("")
-    console.log("")
-    console.log("")
     console.log("Destination", options)
-    console.log("")
-    console.log("")
     console.log("")
 	await storage.bucket(bucketName).file(fileName).download(options);
 	console.log("Download Successfully");
 }
 
-async function convertFile(fileName) {
+async function convertFile(fileType, fileName) {
 	console.log("Function: Convert File");
-	//! please Notice that when trying to convert file the file cannot be found!!!
-	//? Destination { destination: '/tmp/Gal-Flying-Ticket.pdf' }
-	//? lowriter --invisible --convert-to docx "Gal-Flying-Ticket.pdf"--outdir /tmp "/tmp/Gal-Flying-Ticket.pdf"
-	//? Error: Error: source file could not be loaded
-	//? Error: no export filter for /usr/src/app/Gal-Flying-Ticket.docx found, aborting.
+	console.log("fileType", fileType)
+	let cmd = ""
 	//! sudo libreoffice --headless  --infilter="writer_pdf_import" --convert-to docx --outdir /home/gal_moshko/Files Gal-Covid-Positive-test-results.pdf
-	
-	const cmd = `libreoffice --headless  --infilter="writer_pdf_import" --convert-to docx --outdir /tmp /tmp/${fileName}`
+	switch (fileType) {
+		case "file2docx":
+			cmd = `libreoffice --headless  --infilter="writer_pdf_import" --convert-to docx --outdir /tmp /tmp/${fileName}`
+			newFileName = fileName.replace(/\.\w+$/, ".docx");			
+			break;
+		case "file2pdf":
+			cmd = `libreoffice --headless --convert-to pdf --outdir --outdir /tmp /tmp/${fileName}`;
+			newFileName = fileName.replace(/\.\w+$/, ".pdf");
+			break;
+	}
+	// const cmd = `libreoffice --headless  --infilter="writer_pdf_import" --convert-to docx --outdir /tmp /tmp/${fileName}`
 	
 	// "lowriter --invisible --convert-to docx:writer_pdf_export " + `"${fileName}"` + "--outdir /tmp " +
 	// `"/tmp/${fileName}"`;
@@ -77,8 +81,7 @@ async function convertFile(fileName) {
 	}
 	console.log("Stdout");
 	console.log(stdout);
-	docFileName = fileName.replace(/\.\w+$/, ".docx");
-	return docFileName;
+	return newFileName;
 }
 
 async function deleteFile(bucketName, fileName) {

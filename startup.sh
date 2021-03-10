@@ -11,9 +11,8 @@ echo " "
 curl -X POST $SERVICE_URL
 curl -X POST -H "Authorization: Bearer $(gcloud auth print-identity-token)" $SERVICE_URL
 gsutil mb gs://$GOOGLE_CLOUD_PROJECT-file2docx
-gsutil mb gs://$GOOGLE_CLOUD_PROJECT-docx-done 
 gsutil mb gs://$GOOGLE_CLOUD_PROJECT-file2pdf
-gsutil mb gs://$GOOGLE_CLOUD_PROJECT-pdf-done 
+gsutil mb gs://$GOOGLE_CLOUD_PROJECT-done 
 echo " "
 echo "Buckets Has Been Created"
 echo " "
@@ -42,5 +41,5 @@ echo " "
 echo "Building Again"
 echo " "
 gcloud builds submit --tag gcr.io/$GOOGLE_CLOUD_PROJECT/file2-converter
-gcloud beta run deploy file2-converter --image gcr.io/$GOOGLE_CLOUD_PROJECT/file2-converter --platform managed --region us-central1 --memory=2Gi --no-allow-unauthenticated --set-env-vars DOCX_BUCKET=$GOOGLE_CLOUD_PROJECT-docx-done, PDF_BUCKET=$GOOGLE_CLOUD_PROJECT-pdf-done
+gcloud beta run deploy file2-converter --image gcr.io/$GOOGLE_CLOUD_PROJECT/file2-converter --platform managed --region us-central1 --memory=2Gi --no-allow-unauthenticated --set-env-vars DONE_BUCKET=$GOOGLE_CLOUD_PROJECT-done
 
