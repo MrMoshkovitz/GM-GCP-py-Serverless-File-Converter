@@ -20,8 +20,9 @@ app.post("/", async (req, res) => {
         console.log("File~~~~~~~~~~~~~~~~~~");
         console.log("File~~~~~~~~~~~~~~~~~~");
         console.log(file);
-        console.log(`BucketName: ${file.name}File Name: ${file.name}`)
-        let endBucketName = file.bucket.spllit('-')
+        console.log(`BucketName: ${file.bucket}, File Name: ${file.name}`)
+        let endBucketName = file.bucket
+		endBucketName = endBucketName.spllit('-')
 		endBucketName = endBucketName[endBucketName.length-1];
 		console.log(endBucketName);
 		await downloadFile(file.bucket, file.name);
