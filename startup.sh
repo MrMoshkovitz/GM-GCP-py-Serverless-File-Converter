@@ -41,5 +41,5 @@ echo " "
 echo "Building Again"
 echo " "
 gcloud builds submit --tag gcr.io/$GOOGLE_CLOUD_PROJECT/file2-converter
-gcloud beta run deploy file2-converter --image gcr.io/$GOOGLE_CLOUD_PROJECT/file2-converter --platform managed --region us-central1 --memory=2Gi --no-allow-unauthenticated --set-env-vars DONE_BUCKET=$GOOGLE_CLOUD_PROJECT-done
+gcloud beta run deploy file-converter --image gcr.io/$GOOGLE_CLOUD_PROJECT/file-converter --platform managed --region us-central1 --memory=2Gi --no-allow-unauthenticated --set-env-vars DONE_BUCKET=$GOOGLE_CLOUD_PROJECT-done
 

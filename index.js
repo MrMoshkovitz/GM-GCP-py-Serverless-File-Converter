@@ -21,7 +21,7 @@ app.post("/", async (req, res) => {
         console.log("File~~~~~~~~~~~~~~~~~~");
         console.log(file);
         console.log(`BucketName: ${file.bucket}, File Name: ${file.name}`)
-        let endBucketName = file.bucket
+        let endBucketName = file.bucket.toString()
 		endBucketName = endBucketName.spllit('-')
 		endBucketName = endBucketName[endBucketName.length-1];
 		console.log(endBucketName);
